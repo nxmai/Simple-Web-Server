@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Team Info</title>
+   <style>
+     @import url('https://fonts.googleapis.com/css?family=Abel');
+
+html, body {
+  background-image: url("background.jpg");
+  font-family: Abel, Arial, Verdana, sans-serif;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+}
+
+.card {
+  width: 450px;
+  height: 250px;
+  background-color:blue;
+  background: linear-gradient(#f8f8f8, #fff);
+  box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  margin: 1.5rem;
+}
+
+.card .additional {
+  position: absolute;
+  width: 150px;
+  height: 100%;
+  background: rgb(68, 148, 141);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.card.black .additional {
+  background: firebrick;
+}
+
+.card .additional .user-card .points {
+  top: 85%;
+}
+
+.card .general {
+  width: 300px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  padding: 1rem;
+}
+
+.card .additional img {
+  position: relative;
+  top: 65px;
+  left: 25px;
+  border-radius: 60%;
+  width: 100px;
+  height: auto;
+}
+   </style>
+</head>
+<body>
+
+<div class="center">
+
+  <div class="card">
+    <div class="additional">
+      <div class="user-card">
+        
+        <img src="xuanmai.jpg" alt="Avatar">
+      </div>
+    </div>
+    <div class="general">
+      <h1>Nguyen Xuan Mai</h1>
+      <p>Student ID: 18120056</p>
+      <p>Currently a student with major is Information Technology at University of Science</p>
+    </div>
+  </div>
+
+  <div class="card black">
+    <div class="additional">
+      <div class="user-card">
+        
+        <img src="thuhang.jpg" alt="Avatar">
+      </div>
+    </div>
+    <div class="general">
+      <h1>Nguyen Thi Thu Hang</h1>
+      <p>Student ID: 18120027</p>
+      <p>Living in Sai Gon and an Information Technology student at University of Science</p>
+    </div>
+  </div>
+
+</body>
+</html>
