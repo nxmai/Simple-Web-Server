@@ -21,6 +21,20 @@ def analysis_data(data):
     _psword = data[end + 10:]
     return _usname, _psword
     
+    #read file function
+def read_file(filename):
+    try:
+        file_open = open(filename, 'rb')
+        data = file_open.read()
+        file_open.close()
+        response_code = 200
+
+    except FileNotFoundError:
+        print('File Not Found')
+        response_code = 404
+        data = ""
+
+    return response_code, data
 
 def get_filepath(req_pack):
     filepath = req_pack.split(' ')[1]      #file name is index 1 near get/post method in http request package
@@ -38,28 +52,13 @@ def create_response(status, data):
     elif status == 404:
         status_code = 'HTTP/1.1 404 NOT FOUND\r\n'
 
-    header = 'Content-Type: text/html\r\n'
-    header += 'Accept: */*\r\n'
+    header = 'Connection: close\r\n'
+    header += 'Accept: text/html\r\n'
     header += 'Accept-Language: en_US\r\n'
-    header += 'Connection: close\r\n\r\n'
+    header += 'Content-Type: text/html\r\n\r\n'
 
     res_header = status_code + header
     return res_header, data
-
-#read file function
-def read_file(filename):
-    try:
-        file_open = open(filename, 'rb')
-        data = file_open.read()
-        file_open.close()
-        response_code = 200
-
-    except FileNotFoundError:
-        print('File Not Found')
-        response_code = 404
-        data = ""
-
-    return response_code, data
 
 
 def main():
@@ -69,7 +68,7 @@ def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     #bind the socket to the port
-    s.bind(('', PORT))
+    s.bind(('127.0.0.1', PORT))
 
     #listening for maximum number of queue connection
     s.listen(_connection)
@@ -100,7 +99,7 @@ def main():
 
             #response path package
             res_path = os.path.join(cur_path, 'index.html')     #link to index.html file
-            http_status, data = read_file(res_path)      #data: data in index.html file
+            status_code, data = read_file(res_path)      #data: data in index.html file
 
             #check method
             if req_method == 'GET' or req_method == 'POST':
@@ -114,7 +113,7 @@ def main():
                         
                     else:
                         #if not true
-                        http_status = 404
+                        status_code = 404
                         res_path = os.path.join(cur_path, '404.html')
                         
                 elif req_method == 'GET':
@@ -131,7 +130,7 @@ def main():
                 data = file_open.read()
                 
                 #create respones package to send back
-                res_header, res_body = create_response(http_status, data)
+                res_header, res_body = create_response(status_code, data)
                 
                 #sended
                 client.send(res_header.encode())
@@ -142,7 +141,7 @@ def main():
             s.close()
             sys.exit(0)
 
-        if stop == 4 or http_status == 404:
+        if stop == 4 or status_code == 404:
             break
 
 main()
